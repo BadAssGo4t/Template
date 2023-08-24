@@ -48,20 +48,15 @@ namespace ScreenManagerNam
 	  {
 		  Game::UpdateGame();
 	  } break;
-
-	  /*
-	  case Controls: {
-			Controls::UpdateControls();
+	  case Credits:
+	  {
+		  Credits::UpdateCredits;
 	  } break;
+	  case Instructions:
+	  {
+		  Instructions::UpdateInstructions;
+	  }break;
 
-	  case Credits: {
-		  Credits::UpdateCredits();
-	  } break;
-
-	  case Game: {
-		  Gameplay::UpdateGame();
-	  } break;
-	  */
 	}
 
   } // CHANGE END 

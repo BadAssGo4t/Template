@@ -21,13 +21,13 @@ namespace ScreenManagerNam
 
 	enum GameScreen
 	{
-		Menu = 0,
-		Game = 1,
-		Controls = 2,
-		Credits = 3,
-		End = 4
+		Menu,
+		Game,
+		Instructions,
+		Credits,
+		End
 	};
-	extern GameScreen ScreensSwap;
+	GameScreen ScreensSwap;
 
 	int ScreenManager();
 }

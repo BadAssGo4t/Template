@@ -23,7 +23,7 @@ namespace Menu
         background = LoadTexture(""); // Parallax background
         FrontLayer_Background = LoadTexture("");  // Parallax Front Layer
 
-                // PLay Button
+        // PLay Button
         play.button = LoadTexture("../Resources/Button/Play-Bttn.png");
         play.frameHeight = (float)play.button.height / NUM_FRAMES;
         play.sourceRec = { 0, 0, (float)play.button.width, play.frameHeight };
@@ -31,16 +31,16 @@ namespace Menu
         // Define button bounds on screen
         play.btnBounds = { curScreen.width / 2.0f - play.button.width / 2.0f, curScreen.height / 2.0f - play.button.height * 3 / NUM_FRAMES / 2.0f, (float)play.button.width, play.frameHeight };
         play.btnState = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-        play.btnAction = false;
+        play.btnAction = false; // End Play Bttn
 
-        // Controls Button
+        // Instructions Button
         controls.button = LoadTexture("../Resources/Button/Controls-Bttn.png");
         controls.frameHeight = (float)controls.button.height / NUM_FRAMES;
         controls.sourceRec = { 0, 0, (float)controls.button.width, controls.frameHeight };
 
         controls.btnBounds = { curScreen.width / 2.0f - controls.button.width / 2.0f, curScreen.height / 2.0f - controls.button.height / 2 / NUM_FRAMES / 2.0f, (float)controls.button.width, controls.frameHeight };
         controls.btnState = 0;
-        controls.btnAction = false;
+        controls.btnAction = false;// End Instructions Bttn
 
         // Credits Button
         credits.button = LoadTexture("../Resources/Button/Credits-Bttn.png");
@@ -49,7 +49,7 @@ namespace Menu
 
         credits.btnBounds = { curScreen.width / 2.0f - credits.button.width / 2.0f, curScreen.height / 2.0f + credits.button.height * 2 / NUM_FRAMES / 2.0f, (float)credits.button.width, credits.frameHeight };
         credits.btnState = 0;
-        credits.btnAction = false;
+        credits.btnAction = false;// End Credits Bttn
 
         play.btnAction = false;
         controls.btnAction = false;
@@ -108,11 +108,13 @@ namespace Menu
         {
             std::cout << "boton Controls precionado" << "\n";
             controls.btnAction = false;
+            Screen; ScreenManagerNam::ScreensSwap = ScreenManagerNam::Instructions;
         }
         if (credits.btnAction)
         {
             std::cout << "boton Credits precionado" << "\n";
             credits.btnAction = false;
+            Screen; ScreenManagerNam::ScreensSwap = ScreenManagerNam::Credits;
         }
 
         // Calculate button frame rectangle to draw depending on button state

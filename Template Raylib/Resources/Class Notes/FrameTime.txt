@@ -1,0 +1,2 @@
+Professor said to use GetFrameTime() when declaring stuff that should update on movement basis Example: 
+Ball.pos += speed*dir*GetFrameTime(); 
