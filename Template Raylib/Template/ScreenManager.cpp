@@ -2,7 +2,7 @@
 
 namespace ScreenManagerNam
 {
-	static void Change();
+	
 
 	GameScreen Screens;
 
@@ -17,7 +17,7 @@ namespace ScreenManagerNam
 		Menu::InitMenu();
 		//Controls::initControls();
 		//Credits::InitCredits();
-		//Gameplay::InitGameplay();
+		
 
 
 		//Gameplay::UpdateGame();
@@ -38,11 +38,15 @@ namespace ScreenManagerNam
 
   static void Change() 
   {
-	switch (Screens)
+	switch (ScreensSwap)
 	{
 
 	  case Menu: {
 			Menu::UpdateMenu();
+	  } break;
+	  case Game: 
+	  {
+		  Game::UpdateGame();
 	  } break;
 
 	  /*

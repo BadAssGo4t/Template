@@ -100,15 +100,19 @@ namespace Menu
         if (play.btnAction)
         {
             std::cout << "boton Play precionado" << "\n";
-
+            play.btnAction = false;
+            //Gameplay::InitGameplay();
+            ScreenManagerNam::ScreensSwap = ScreenManagerNam::Game;
         }
         if (controls.btnAction)
         {
             std::cout << "boton Controls precionado" << "\n";
+            controls.btnAction = false;
         }
         if (credits.btnAction)
         {
             std::cout << "boton Credits precionado" << "\n";
+            credits.btnAction = false;
         }
 
         // Calculate button frame rectangle to draw depending on button state

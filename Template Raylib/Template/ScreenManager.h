@@ -17,15 +17,17 @@ static Screen curScreen;
 
 namespace ScreenManagerNam
 {
+	static void Change();
+
 	enum GameScreen
 	{
 		Menu = 0,
-		Game,
-		Controls,
-		Credits,
-		End
+		Game = 1,
+		Controls = 2,
+		Credits = 3,
+		End = 4
 	};
-	extern GameScreen Screens;
+	extern GameScreen ScreensSwap;
 
 	int ScreenManager();
 }
