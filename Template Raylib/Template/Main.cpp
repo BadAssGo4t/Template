@@ -3,5 +3,5 @@
 
 void main()
 {
-	//screenManager();
+	ScreenManagerNam::ScreenManager();
 }
