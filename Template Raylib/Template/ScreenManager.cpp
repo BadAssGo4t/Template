@@ -15,13 +15,6 @@ namespace ScreenManagerNam
 		InitWindow(curScreen.width, curScreen.height, "GameName");
 
 		Menu::InitMenu();
-		//Controls::initControls();
-		//Credits::InitCredits();
-		
-
-
-		//Gameplay::UpdateGame();
-
 
 		while (!WindowShouldClose())
 		{
@@ -50,11 +43,11 @@ namespace ScreenManagerNam
 	  } break;
 	  case Credits:
 	  {
-		  Credits::UpdateCredits;
+		  CreditsNmsp::UpdateCredits();
 	  } break;
 	  case Instructions:
 	  {
-		  Instructions::UpdateInstructions;
+		  Instructions::UpdateInstructions();
 	  }break;
 
 	}

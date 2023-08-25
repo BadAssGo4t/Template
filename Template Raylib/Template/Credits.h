@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-namespace Credits
+namespace CreditsNmsp
 {
 	void InitCredits();
 	void UpdateCredits();

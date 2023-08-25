@@ -1,6 +1,6 @@
 #include "Credits.h"
 
-namespace Credits
+namespace CreditsNmsp
 {
 
     // Static Values 
