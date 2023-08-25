@@ -11,8 +11,7 @@ typedef struct   Button
     Rectangle btnBounds;
     int btnState;
     bool btnAction;
-} Play, Controls, Credits;
-
+} Play, Controls, Credits, Return;
 
 
 namespace Menu

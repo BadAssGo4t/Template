@@ -23,7 +23,7 @@ namespace Menu
         background = LoadTexture(""); // Parallax background
         FrontLayer_Background = LoadTexture("");  // Parallax Front Layer
 
-                // PLay Button
+        // PLay Button
         play.button = LoadTexture("../Resources/Button/Play-Bttn.png");
         play.frameHeight = (float)play.button.height / NUM_FRAMES;
         play.sourceRec = { 0, 0, (float)play.button.width, play.frameHeight };

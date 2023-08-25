@@ -5,7 +5,7 @@ namespace CreditsNmsp
     Texture2D backgroundCred;
     static Vector2 mousePoint; 
     static Image creditsImg;
-   
+    static Return rtrn;
 
     void InitCredits() // Init
     {
@@ -17,13 +17,38 @@ namespace CreditsNmsp
 
         backgroundCred = LoadTextureFromImage(creditsImg);
 
+        rtrn.button = LoadTexture("../Resources/Button/Return.png");
+        rtrn.frameHeight = (float)rtrn.button.height / NUM_FRAMES;
+        rtrn.sourceRec = { 0, 0, (float)rtrn.button.width, rtrn.frameHeight };
+
+        // Define button bounds on screen
+        rtrn.btnBounds = { curScreen.width - rtrn.button.width * 3 / 2.0f, curScreen.height - rtrn.button.height * 3 / NUM_FRAMES / 2.0f, (float)rtrn.button.width, rtrn.frameHeight };
+        rtrn.btnState = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+        rtrn.btnAction = false;
+
     }
 
     void UpdateCredits()
     {
+        DrawCredits();
+
         mousePoint = GetMousePosition();
 
-        DrawCredits();    
+        if (CheckCollisionPointRec(mousePoint, rtrn.btnBounds))
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) rtrn.btnState = 2;
+            else rtrn.btnState = 1;
+
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) rtrn.btnAction = true;
+        }
+        else rtrn.btnState = 0;
+
+        if (rtrn.btnAction)
+        {
+            std::cout << "boton Credits precionado" << "\n";
+            rtrn.btnAction = false;
+            ScreenManagerNam::Screens = ScreenManagerNam::Menu;
+        }
     }
 
     void DrawCredits() {
@@ -32,6 +57,8 @@ namespace CreditsNmsp
         ClearBackground(GetColor(0x052c46ff));
 
         DrawTexture(backgroundCred, 0, 0, WHITE);
+
+        DrawTextureRec(rtrn.button, rtrn.sourceRec, Vector2{ rtrn.btnBounds.x, rtrn.btnBounds.y }, WHITE);
 
         EndDrawing();
     }
