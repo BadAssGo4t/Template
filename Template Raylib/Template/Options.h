@@ -2,8 +2,8 @@
 
 namespace Options
 {
-	void InitOptions();
-	void UpdateOptions();
-	void DrawOptions();
-	void UnloadOptions();
+    void InitOptions(); // Init
+    void UpdateOptions();
+    void DrawOptions();
+    void UnloadOptions();
 }

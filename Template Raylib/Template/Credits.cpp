@@ -3,8 +3,6 @@
 namespace CreditsNmsp
 {
 
-    // Static Values 
-
     void InitCredits() // Init
     {
 
@@ -14,17 +12,13 @@ namespace CreditsNmsp
     {
         DrawCredits();
 
-        // Calculate button frame rectangle to draw depending on button state
-
-
-        // TODO: Update your variables here
     }
 
     void DrawCredits() {
 
         BeginDrawing();
 
-
+        ClearBackground(GetColor(0x052c46ff));
 
         EndDrawing();
     }

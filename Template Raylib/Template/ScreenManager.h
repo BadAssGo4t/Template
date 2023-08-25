@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
+
 #include "Menu.h"
 #include "Game.h"
 #include "Options.h"
@@ -16,17 +17,15 @@ static Screen curScreen;
 
 namespace ScreenManagerNam
 {
-	static void Change();
-
 	enum GameScreen
 	{
-		Menu,
+		Menu = 0,
 		Game,
-		Instructions,
+		Controls,
 		Credits,
 		End
 	};
-	GameScreen ScreensSwap;
+	extern GameScreen Screens;
 
 	int ScreenManager();
 }

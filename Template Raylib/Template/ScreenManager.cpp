@@ -1,7 +1,8 @@
+#include "ScreenManager.h"
 
 namespace ScreenManagerNam
 {
-	
+	static void Change();
 
 	GameScreen Screens;
 
@@ -14,6 +15,13 @@ namespace ScreenManagerNam
 		InitWindow(curScreen.width, curScreen.height, "GameName");
 
 		Menu::InitMenu();
+		//Controls::initControls();
+		//Credits::InitCredits();
+		//Gameplay::InitGameplay();
+
+
+		//Gameplay::UpdateGame();
+
 
 		while (!WindowShouldClose())
 		{
@@ -30,25 +38,26 @@ namespace ScreenManagerNam
 
   static void Change() 
   {
-	switch (ScreensSwap)
+	switch (Screens)
 	{
 
 	  case Menu: {
 			Menu::UpdateMenu();
 	  } break;
-	  case Game: 
-	  {
-		  Game::UpdateGame();
-	  } break;
-	  case Credits:
-	  {
-		  CreditsNmsp::UpdateCredits();
-	  } break;
-	  case Instructions:
-	  {
-		  Instructions::UpdateInstructions();
-	  }break;
 
+	  /*
+	  case Controls: {
+			Controls::UpdateControls();
+	  } break;
+
+	  case Credits: {
+		  Credits::UpdateCredits();
+	  } break;
+
+	  case Game: {
+		  Gameplay::UpdateGame();
+	  } break;
+	  */
 	}
 
   } // CHANGE END 

@@ -1,9 +1,6 @@
 #include "Instructions.h"
-
 namespace Instructions
 {
-
-    // Static Values 
 
     void InitInstructions() // Init
     {
@@ -14,17 +11,13 @@ namespace Instructions
     {
         DrawInstructions();
 
-        // Calculate button frame rectangle to draw depending on button state
-
-
-        // TODO: Update your variables here
     }
 
     void DrawInstructions() {
 
         BeginDrawing();
 
-
+        ClearBackground(GetColor(0x052c46ff));
 
         EndDrawing();
     }

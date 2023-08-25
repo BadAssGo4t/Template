@@ -1,8 +1,7 @@
+#include "Options.h"
 
 namespace Options
 {
-
-    // Static Values 
 
     void InitOptions() // Init
     {
@@ -13,23 +12,19 @@ namespace Options
     {
         DrawOptions();
 
-        // Calculate button frame rectangle to draw depending on button state
-
-
-        // TODO: Update your variables here
     }
 
     void DrawOptions() {
 
         BeginDrawing();
 
-
+        ClearBackground(GetColor(0x052c46ff));
 
         EndDrawing();
     }
 
     void UnloadOptions()
     {
-
+ 
     }
 }

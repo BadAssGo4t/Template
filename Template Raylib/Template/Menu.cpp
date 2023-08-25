@@ -1,55 +1,29 @@
 #include "Menu.h"
 
-#define NUM_FRAMES  3 
 
-typedef struct   Button
+namespace Menu
 {
-    Texture2D button;
-    float frameHeight;
-    Rectangle sourceRec;
-    Rectangle btnBounds;
-    int btnState;
-    bool btnAction;
-} Play, Controls, Credits;
-
-int Menu(void)
-{
-    // Init
-    const int screenWidth = 600;
-    const int screenHeight = 800;
-
-    InitWindow(screenWidth, screenHeight, "Menu");
-
     static Play play;
     static Controls controls;
     static Credits credits;
 
-    //parallax
-    Texture2D background = LoadTexture(""); // Parallax background
-    Texture2D Front_Background = LoadTexture("");  // Paral
+    Texture2D background;
+    Texture2D FrontLayer_Background;
 
     float scrollingBack = 0.0f;
     float scrollingFront = 0.0f;
 
-    // PLay Button
-    play.button = LoadTexture("../Resources/Button/Play-Bttn.png");
-    play.frameHeight = (float)play.button.height / NUM_FRAMES;
-    play.sourceRec = { 0, 0, (float)play.button.width, play.frameHeight };
-    // Define button bounds on screen
-    play.btnBounds = { screenWidth / 2.0f - play.button.width / 2.0f, screenHeight / 2.0f - play.button.height * 3 / NUM_FRAMES / 2.0f, (float)play.button.width, play.frameHeight };
-    play.btnState = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-    play.btnAction = false;
+    Vector2 mousePoint = { 0.0f, 0.0f };
 
-    // Controls Button
-    controls.button = LoadTexture("../Resources/Button/Controls-Bttn.png");
-    controls.frameHeight = (float)controls.button.height / NUM_FRAMES;
-    controls.sourceRec = { 0, 0, (float)controls.button.width, controls.frameHeight };
+    void InitMenu() // Init
+    {
+        curScreen.width = 600;
+        curScreen.height = 800;
 
-    controls.btnBounds = { screenWidth / 2.0f - controls.button.width / 2.0f, screenHeight / 2.0f - controls.button.height / 2 / NUM_FRAMES / 2.0f, (float)controls.button.width, controls.frameHeight };
-    controls.btnState = 0;
-    controls.btnAction = false;
+        background = LoadTexture(""); // Parallax background
+        FrontLayer_Background = LoadTexture("");  // Parallax Front Layer
 
-        // PLay Button
+                // PLay Button
         play.button = LoadTexture("../Resources/Button/Play-Bttn.png");
         play.frameHeight = (float)play.button.height / NUM_FRAMES;
         play.sourceRec = { 0, 0, (float)play.button.width, play.frameHeight };
@@ -57,16 +31,16 @@ int Menu(void)
         // Define button bounds on screen
         play.btnBounds = { curScreen.width / 2.0f - play.button.width / 2.0f, curScreen.height / 2.0f - play.button.height * 3 / NUM_FRAMES / 2.0f, (float)play.button.width, play.frameHeight };
         play.btnState = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-        play.btnAction = false; // End Play Bttn
+        play.btnAction = false;
 
-        // Instructions Button
+        // Controls Button
         controls.button = LoadTexture("../Resources/Button/Controls-Bttn.png");
         controls.frameHeight = (float)controls.button.height / NUM_FRAMES;
         controls.sourceRec = { 0, 0, (float)controls.button.width, controls.frameHeight };
 
         controls.btnBounds = { curScreen.width / 2.0f - controls.button.width / 2.0f, curScreen.height / 2.0f - controls.button.height / 2 / NUM_FRAMES / 2.0f, (float)controls.button.width, controls.frameHeight };
         controls.btnState = 0;
-        controls.btnAction = false;// End Instructions Bttn
+        controls.btnAction = false;
 
         // Credits Button
         credits.button = LoadTexture("../Resources/Button/Credits-Bttn.png");
@@ -75,7 +49,7 @@ int Menu(void)
 
         credits.btnBounds = { curScreen.width / 2.0f - credits.button.width / 2.0f, curScreen.height / 2.0f + credits.button.height * 2 / NUM_FRAMES / 2.0f, (float)credits.button.width, credits.frameHeight };
         credits.btnState = 0;
-        credits.btnAction = false;// End Credits Bttn
+        credits.btnAction = false;
 
         play.btnAction = false;
         controls.btnAction = false;
@@ -83,9 +57,16 @@ int Menu(void)
 
         scrollingBack -= 0.5f;
         scrollingFront -= 0.9f;
+    }
+
+    void UpdateMenu()
+    {
+        DrawMenu();
+
+        mousePoint = GetMousePosition();
 
         if (scrollingBack <= -background.width * 2) scrollingBack = 0;
-        if (scrollingFront <= -Front_Background.width * 2) scrollingFront = 0;
+        if (scrollingFront <= -FrontLayer_Background.width * 2) scrollingFront = 0;
 
         // Check button state
         if (CheckCollisionPointRec(mousePoint, play.btnBounds))
@@ -120,20 +101,16 @@ int Menu(void)
         {
             std::cout << "boton Play precionado" << "\n";
             play.btnAction = false;
-            //Gameplay::InitGameplay();
-            ScreenManagerNam::ScreensSwap = ScreenManagerNam::Game;
         }
         if (controls.btnAction)
         {
             std::cout << "boton Controls precionado" << "\n";
             controls.btnAction = false;
-            Screen; ScreenManagerNam::ScreensSwap = ScreenManagerNam::Instructions;
         }
         if (credits.btnAction)
         {
             std::cout << "boton Credits precionado" << "\n";
             credits.btnAction = false;
-            Screen; ScreenManagerNam::ScreensSwap = ScreenManagerNam::Credits;
         }
 
         // Calculate button frame rectangle to draw depending on button state
@@ -142,22 +119,21 @@ int Menu(void)
         credits.sourceRec.y = credits.btnState * credits.frameHeight;
 
         // TODO: Update your variables here
+    }
 
-        // Draw
+    void DrawMenu() {
 
         BeginDrawing();
 
         ClearBackground(GetColor(0x052c46ff));
 
-
-
         DrawTextureEx(background, Vector2{ scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
         DrawTextureEx(background, Vector2{ background.width * 2 + scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
 
-        DrawTextureEx(Front_Background, Vector2{ scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
-        DrawTextureEx(Front_Background, Vector2{ Front_Background.width * 2 + scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
+        DrawTextureEx(FrontLayer_Background, Vector2{ scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
+        DrawTextureEx(FrontLayer_Background, Vector2{ FrontLayer_Background.width * 2 + scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
 
-        DrawText("Asteroids", screenWidth / 2 - MeasureText("Asteroids", 40), 40, 80, LIGHTGRAY);
+        DrawText("Game", curScreen.width / 2 - MeasureText("Game", 40), 40, 80, LIGHTGRAY);
 
         DrawTextureRec(play.button, play.sourceRec, Vector2{ play.btnBounds.x, play.btnBounds.y }, WHITE);
         DrawTextureRec(controls.button, controls.sourceRec, Vector2{ controls.btnBounds.x, controls.btnBounds.y }, WHITE);
@@ -166,12 +142,13 @@ int Menu(void)
         EndDrawing();
     }
 
-    UnloadTexture(play.button);
-    UnloadTexture(controls.button);
-    UnloadTexture(credits.button);
-    UnloadTexture(background);
-    UnloadTexture(Front_Background);
-    CloseWindow();
-
-    return 0;
+    void UnloadMenu()
+    {
+        UnloadTexture(play.button);
+        UnloadTexture(controls.button);
+        UnloadTexture(credits.button);
+        UnloadTexture(background);
+        UnloadTexture(FrontLayer_Background);
+    }
 }
+   
