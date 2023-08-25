@@ -13,7 +13,7 @@ namespace Menu
     float scrollingBack = 0.0f;
     float scrollingFront = 0.0f;
 
-    Vector2 mousePoint = { 0.0f, 0.0f };
+    static Vector2 mousePoint;
 
     void InitMenu() // Init
     {
@@ -111,6 +111,7 @@ namespace Menu
         {
             std::cout << "boton Credits precionado" << "\n";
             credits.btnAction = false;
+            ScreenManagerNam::Screens = ScreenManagerNam::Credits;
         }
 
         // Calculate button frame rectangle to draw depending on button state
@@ -149,6 +150,7 @@ namespace Menu
         UnloadTexture(credits.button);
         UnloadTexture(background);
         UnloadTexture(FrontLayer_Background);
+        std::cout << "Menu Unloaded.";
     }
 }
    

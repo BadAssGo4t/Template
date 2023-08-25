@@ -17,8 +17,6 @@ typedef struct   Button
 
 namespace Menu
 {
-    int Menu();
-
     void InitMenu();
     void UpdateMenu();
     void DrawMenu();

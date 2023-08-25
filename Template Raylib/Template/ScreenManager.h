@@ -21,7 +21,7 @@ namespace ScreenManagerNam
 	{
 		Menu = 0,
 		Game,
-		Controls,
+		Instructions,
 		Credits,
 		End
 	};
