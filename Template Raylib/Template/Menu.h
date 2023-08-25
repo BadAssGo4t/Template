@@ -1,18 +1,12 @@
 #pragma once
 #include "ScreenManager.h"
+int Menu();
 
-#define NUM_FRAMES  3 
-
-typedef struct   Button
+class Menu
 {
-    Texture2D button;
-    float frameHeight;
-    Rectangle sourceRec;
-    Rectangle btnBounds;
-    int btnState;
-    bool btnAction;
-} Play, Controls, Credits;
+public:
 
+private:
 
 
 namespace Menu

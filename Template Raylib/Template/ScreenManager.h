@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
-
 #include "Menu.h"
 #include "Game.h"
 #include "Options.h"
