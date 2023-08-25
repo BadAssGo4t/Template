@@ -3,8 +3,10 @@
 namespace CreditsNmsp
 {
     Texture2D backgroundCred;
+    Texture2D logoTex;
     static Vector2 mousePoint; 
     static Image creditsImg;
+    static Image logo;
     static Return rtrn;
 
     void InitCredits() // Init
@@ -15,7 +17,12 @@ namespace CreditsNmsp
         creditsImg = LoadImage("../Resources/Credits/CreditsGray.png");
         ImageResize(&creditsImg, curScreen.width, curScreen.height);
 
+        logo = LoadImage("../Resources/Useful/SymBlack.png");
+        ImageResize(&logo, 50, 50);
+
         backgroundCred = LoadTextureFromImage(creditsImg);
+
+        logoTex = LoadTextureFromImage(logo);
 
         rtrn.button = LoadTexture("../Resources/Button/Return.png");
         rtrn.frameHeight = (float)rtrn.button.height / NUM_FRAMES;
@@ -57,6 +64,7 @@ namespace CreditsNmsp
         ClearBackground(GetColor(0x052c46ff));
 
         DrawTexture(backgroundCred, 0, 0, WHITE);
+        DrawTexture(logoTex, 0 + logoTex.width, curScreen.height - logoTex.height*2, WHITE);
 
         DrawTextureRec(rtrn.button, rtrn.sourceRec, Vector2{ rtrn.btnBounds.x, rtrn.btnBounds.y }, WHITE);
 

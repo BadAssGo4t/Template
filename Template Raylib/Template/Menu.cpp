@@ -6,6 +6,7 @@ namespace Menu
     static Play play;
     static Controls controls;
     static Credits credits;
+    static Image back_ly;
 
     Texture2D background;
     Texture2D FrontLayer_Background;
@@ -20,7 +21,10 @@ namespace Menu
         curScreen.width = 600;
         curScreen.height = 800;
 
-        background = LoadTexture(""); // Parallax background
+        back_ly = LoadImage("../Resources/Useful/Bkg.png");
+        ImageResize(&back_ly, curScreen.width, curScreen.height);
+
+        background = LoadTextureFromImage(back_ly) ; // Parallax background
         FrontLayer_Background = LoadTexture("");  // Parallax Front Layer
 
         // PLay Button
