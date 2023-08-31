@@ -27,10 +27,8 @@ namespace ScreenManagerNam
 			Change();
 		}
 
-		Menu::UnloadMenu();
-		CreditsNmsp::UnloadCredits;
 		CloseWindow();
-
+		Unloader::UnloadAll();
 		return 0;
 	} // SCreen MANAGER
 
@@ -56,7 +54,7 @@ namespace ScreenManagerNam
 
 	  /*
 	  * case Game: {
-		  Gameplay::UpdateGame();
+		  Game::UpdateGame();
 	  } break;
 	  */
 	}

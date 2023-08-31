@@ -25,6 +25,6 @@ namespace Options
 
     void UnloadOptions()
     {
- 
+        std::cout << "Options Unloaded." << '\n';
     }
 }

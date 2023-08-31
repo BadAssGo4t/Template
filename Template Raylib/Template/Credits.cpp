@@ -8,9 +8,12 @@ namespace CreditsNmsp
     static Image creditsImg;
     static Image logo;
     static Return rtrn;
+    int amountOfCredits = 0;
+
 
     void InitCredits() // Init
     {
+        amountOfCredits = 3;
         curScreen.width = 600;
         curScreen.height = 800;
 
@@ -75,6 +78,6 @@ namespace CreditsNmsp
     {
         UnloadTexture(backgroundCred);
         UnloadImage(creditsImg);
-        std::cout << "Credits Unloaded.";
+        std::cout << "Credits Unloaded." << '\n';
     }
 }

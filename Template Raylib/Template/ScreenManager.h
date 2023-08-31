@@ -8,6 +8,8 @@
 #include "Instructions.h"
 #include "Credits.h"
 
+#include "Unloader.h"
+
 typedef struct   Screen
 {
     int width;

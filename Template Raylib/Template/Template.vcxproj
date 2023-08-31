@@ -149,6 +149,7 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="Unloader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Credits.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="Unloader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

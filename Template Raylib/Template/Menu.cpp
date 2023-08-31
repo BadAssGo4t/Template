@@ -7,6 +7,7 @@ namespace Menu
     static Controls controls;
     static Credits credits;
     static Image back_ly;
+    static Image front_ly;
 
     Texture2D background;
     Texture2D FrontLayer_Background;
@@ -16,16 +17,26 @@ namespace Menu
 
     static Vector2 mousePoint;
 
+    /*
+    * Alocate buttons on screen:
+    * take size of button, size of screen ,screen size - empty space in between buttons and divide that x amount of buttons and that will give you the size wanted. 
+    * Ej: (screen Height - 400) / 4buttons = x
+    * Button height = x;
+    */
+
     void InitMenu() // Init
     {
         curScreen.width = 600;
         curScreen.height = 800;
 
-        back_ly = LoadImage("../Resources/Useful/Bkg.png");
+        back_ly = LoadImage("../Resources/Useful/bk.jpg");
         ImageResize(&back_ly, curScreen.width, curScreen.height);
+        background = LoadTextureFromImage(back_ly); // Parallax background
 
-        background = LoadTextureFromImage(back_ly) ; // Parallax background
-        FrontLayer_Background = LoadTexture("");  // Parallax Front Layer
+        front_ly = LoadImage("../Resources/Useful/Bkg.png");
+        ImageResize(&front_ly, curScreen.width, curScreen.height);
+        FrontLayer_Background = LoadTextureFromImage(front_ly);  // Parallax Front Layer
+
 
         // PLay Button
         play.button = LoadTexture("../Resources/Button/Play-Bttn.png");
@@ -154,7 +165,9 @@ namespace Menu
         UnloadTexture(credits.button);
         UnloadTexture(background);
         UnloadTexture(FrontLayer_Background);
-        std::cout << "Menu Unloaded.";
+        UnloadImage(back_ly);
+        UnloadImage(front_ly);
+        std::cout << "Menu Unloaded." << '\n';
     }
 }
    
