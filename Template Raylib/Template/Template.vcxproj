@@ -152,6 +152,7 @@
     <ClCompile Include="Unloader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Instructions.h" />

@@ -3,9 +3,11 @@
 
 namespace Menu
 {
-    static Play play;
-    static Controls controls;
-    static Credits credits;
+    
+    Button::newButton playBttn;
+    Button::newButton instructionsBttn;
+    Button::newButton creditsBttn;
+
     static Image back_ly;
     static Image front_ly;
 
@@ -16,6 +18,8 @@ namespace Menu
     float scrollingFront = 0.0f;
 
     static Vector2 mousePoint;
+
+
 
     /*
     * Alocate buttons on screen:
@@ -29,46 +33,46 @@ namespace Menu
         curScreen.width = 600;
         curScreen.height = 800;
 
-        back_ly = LoadImage("../Resources/Useful/bk.jpg");
+        back_ly = LoadImage("../Resources/Images/bk.jpg");
         ImageResize(&back_ly, curScreen.width, curScreen.height);
         background = LoadTextureFromImage(back_ly); // Parallax background
 
-        front_ly = LoadImage("../Resources/Useful/Bkg.png");
+        front_ly = LoadImage("../Resources/Images/Bkg.png");
         ImageResize(&front_ly, curScreen.width, curScreen.height);
         FrontLayer_Background = LoadTextureFromImage(front_ly);  // Parallax Front Layer
 
 
-        // PLay Button
-        play.button = LoadTexture("../Resources/Button/Play-Bttn.png");
-        play.frameHeight = (float)play.button.height / NUM_FRAMES;
-        play.sourceRec = { 0, 0, (float)play.button.width, play.frameHeight };
+        // playBttn Button
+        playBttn.Texture = LoadTexture("../Resources/Button/play-Bttn.png");
+        playBttn.FrameHeight = (float)playBttn.Texture.height / NUM_FRAMES;
+        playBttn.SourceRec = { 0, 0, (float)playBttn.Texture.width, playBttn.FrameHeight };
 
         // Define button bounds on screen
-        play.btnBounds = { curScreen.width / 2.0f - play.button.width / 2.0f, curScreen.height / 2.0f - play.button.height * 3 / NUM_FRAMES / 2.0f, (float)play.button.width, play.frameHeight };
-        play.btnState = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-        play.btnAction = false;
+        playBttn.Bounds = { curScreen.width / 2.0f - playBttn.Texture.width / 2.0f, curScreen.height / 2.0f - playBttn.Texture.height * 3 / NUM_FRAMES / 2.0f, (float)playBttn.Texture.width, playBttn.FrameHeight };
+        playBttn.State = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+        playBttn.Action = false;
 
         // Controls Button
-        controls.button = LoadTexture("../Resources/Button/Controls-Bttn.png");
-        controls.frameHeight = (float)controls.button.height / NUM_FRAMES;
-        controls.sourceRec = { 0, 0, (float)controls.button.width, controls.frameHeight };
+        instructionsBttn.Texture = LoadTexture("../Resources/Button/Controls-Bttn.png");
+        instructionsBttn.FrameHeight = (float)instructionsBttn.Texture.height / NUM_FRAMES;
+        instructionsBttn.SourceRec = { 0, 0, (float)instructionsBttn.Texture.width, instructionsBttn.FrameHeight };
 
-        controls.btnBounds = { curScreen.width / 2.0f - controls.button.width / 2.0f, curScreen.height / 2.0f - controls.button.height / 2 / NUM_FRAMES / 2.0f, (float)controls.button.width, controls.frameHeight };
-        controls.btnState = 0;
-        controls.btnAction = false;
+        instructionsBttn.Bounds = { curScreen.width / 2.0f - instructionsBttn.Texture.width / 2.0f, curScreen.height / 2.0f - instructionsBttn.Texture.height / 2 / NUM_FRAMES / 2.0f, (float)instructionsBttn.Texture.width, instructionsBttn.FrameHeight };
+        instructionsBttn.State = 0;
+        instructionsBttn.Action = false;
 
-        // Credits Button
-        credits.button = LoadTexture("../Resources/Button/Credits-Bttn.png");
-        credits.frameHeight = (float)play.button.height / NUM_FRAMES;
-        credits.sourceRec = { 0, 0, (float)credits.button.width, credits.frameHeight };
+        // creditsBttn Button
+        creditsBttn.Texture = LoadTexture("../Resources/Button/Credits-Bttn.png");
+        creditsBttn.FrameHeight = (float)playBttn.Texture.height / NUM_FRAMES;
+        creditsBttn.SourceRec = { 0, 0, (float)creditsBttn.Texture.width, creditsBttn.FrameHeight };
 
-        credits.btnBounds = { curScreen.width / 2.0f - credits.button.width / 2.0f, curScreen.height / 2.0f + credits.button.height * 2 / NUM_FRAMES / 2.0f, (float)credits.button.width, credits.frameHeight };
-        credits.btnState = 0;
-        credits.btnAction = false;
+        creditsBttn.Bounds = { curScreen.width / 2.0f - creditsBttn.Texture.width / 2.0f, curScreen.height / 2.0f + creditsBttn.Texture.height * 2 / NUM_FRAMES / 2.0f, (float)creditsBttn.Texture.width, creditsBttn.FrameHeight };
+        creditsBttn.State = 0;
+        creditsBttn.Action = false;
 
-        play.btnAction = false;
-        controls.btnAction = false;
-        credits.btnAction = false;
+        playBttn.Action = false;
+        instructionsBttn.Action = false;
+        creditsBttn.Action = false;
 
         scrollingBack -= 0.5f;
         scrollingFront -= 0.9f;
@@ -84,55 +88,55 @@ namespace Menu
         if (scrollingFront <= -FrontLayer_Background.width * 2) scrollingFront = 0;
 
         // Check button state
-        if (CheckCollisionPointRec(mousePoint, play.btnBounds))
+        if (CheckCollisionPointRec(mousePoint, playBttn.Bounds))
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) play.btnState = 2;
-            else play.btnState = 1;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) playBttn.State = 2;
+            else playBttn.State = 1;
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) play.btnAction = true;
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) playBttn.Action = true;
         }
-        else play.btnState = 0;
+        else playBttn.State = 0;
 
-        if (CheckCollisionPointRec(mousePoint, controls.btnBounds))
+        if (CheckCollisionPointRec(mousePoint, instructionsBttn.Bounds))
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) controls.btnState = 2;
-            else controls.btnState = 1;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) instructionsBttn.State = 2;
+            else instructionsBttn.State = 1;
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) controls.btnAction = true;
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) instructionsBttn.Action = true;
         }
-        else controls.btnState = 0;
+        else instructionsBttn.State = 0;
 
-        if (CheckCollisionPointRec(mousePoint, credits.btnBounds))
+        if (CheckCollisionPointRec(mousePoint, creditsBttn.Bounds))
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) credits.btnState = 2;
-            else credits.btnState = 1;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) creditsBttn.State = 2;
+            else creditsBttn.State = 1;
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) credits.btnAction = true;
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) creditsBttn.Action = true;
         }
-        else credits.btnState = 0;
+        else creditsBttn.State = 0;
 
 
-        if (play.btnAction)
+        if (playBttn.Action)
         {
-            std::cout << "boton Play precionado" << "\n";
-            play.btnAction = false;
+            std::cout << "boton playBttn precionado" << "\n";
+            playBttn.Action = false;
         }
-        if (controls.btnAction)
+        if (instructionsBttn.Action)
         {
-            std::cout << "boton Controls precionado" << "\n";
-            controls.btnAction = false;
+            std::cout << "boton instructionsBttn precionado" << "\n";
+            instructionsBttn.Action = false;
         }
-        if (credits.btnAction)
+        if (creditsBttn.Action)
         {
-            std::cout << "boton Credits precionado" << "\n";
-            credits.btnAction = false;
+            std::cout << "boton creditsBttn precionado" << "\n";
+            creditsBttn.Action = false;
             ScreenManagerNam::Screens = ScreenManagerNam::Credits;
         }
 
         // Calculate button frame rectangle to draw depending on button state
-        play.sourceRec.y = play.btnState * play.frameHeight;
-        controls.sourceRec.y = controls.btnState * controls.frameHeight;
-        credits.sourceRec.y = credits.btnState * credits.frameHeight;
+        playBttn.SourceRec.y = playBttn.State * playBttn.FrameHeight;
+        instructionsBttn.SourceRec.y = instructionsBttn.State * instructionsBttn.FrameHeight;
+        creditsBttn.SourceRec.y = creditsBttn.State * creditsBttn.FrameHeight;
 
         // TODO: Update your variables here
     }
@@ -151,18 +155,18 @@ namespace Menu
 
         DrawText("Game", curScreen.width / 2 - MeasureText("Game", 40), 40, 80, LIGHTGRAY);
 
-        DrawTextureRec(play.button, play.sourceRec, Vector2{ play.btnBounds.x, play.btnBounds.y }, WHITE);
-        DrawTextureRec(controls.button, controls.sourceRec, Vector2{ controls.btnBounds.x, controls.btnBounds.y }, WHITE);
-        DrawTextureRec(credits.button, credits.sourceRec, Vector2{ credits.btnBounds.x, credits.btnBounds.y }, WHITE);
+        DrawTextureRec(playBttn.Texture, playBttn.SourceRec, Vector2{ playBttn.Bounds.x, playBttn.Bounds.y }, WHITE);
+        DrawTextureRec(instructionsBttn.Texture, instructionsBttn.SourceRec, Vector2{ instructionsBttn.Bounds.x, instructionsBttn.Bounds.y }, WHITE);
+        DrawTextureRec(creditsBttn.Texture, creditsBttn.SourceRec, Vector2{ creditsBttn.Bounds.x, creditsBttn.Bounds.y }, WHITE);
 
         EndDrawing();
     }
 
     void UnloadMenu()
     {
-        UnloadTexture(play.button);
-        UnloadTexture(controls.button);
-        UnloadTexture(credits.button);
+        UnloadTexture(playBttn.Texture);
+        UnloadTexture(instructionsBttn.Texture);
+        UnloadTexture(creditsBttn.Texture);
         UnloadTexture(background);
         UnloadTexture(FrontLayer_Background);
         UnloadImage(back_ly);

@@ -1,0 +1,7 @@
+ bool IsWindowFullscreen(void);                              // Check if window is currently fullscreen
+
+ void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP)
+
+ void SetWindowMonitor(int monitor);                         // Set monitor for the current window (fullscreen mode)
+
+ void OpenURL(const char *url);                              // Open URL with default system browser (if available)

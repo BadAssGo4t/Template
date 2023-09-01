@@ -2,12 +2,15 @@
 
 namespace CreditsNmsp
 {
+    Button::newButton returnBttn;
+
     Texture2D backgroundCred;
     Texture2D logoTex;
+
     static Vector2 mousePoint; 
     static Image creditsImg;
     static Image logo;
-    static Return rtrn;
+
     int amountOfCredits = 0;
 
 
@@ -20,21 +23,21 @@ namespace CreditsNmsp
         creditsImg = LoadImage("../Resources/Credits/CreditsGray.png");
         ImageResize(&creditsImg, curScreen.width, curScreen.height);
 
-        logo = LoadImage("../Resources/Useful/SymBlack.png");
+        logo = LoadImage("../Resources/Images/SymBlack.png");
         ImageResize(&logo, 50, 50);
 
         backgroundCred = LoadTextureFromImage(creditsImg);
 
         logoTex = LoadTextureFromImage(logo);
 
-        rtrn.button = LoadTexture("../Resources/Button/Return.png");
-        rtrn.frameHeight = (float)rtrn.button.height / NUM_FRAMES;
-        rtrn.sourceRec = { 0, 0, (float)rtrn.button.width, rtrn.frameHeight };
+        returnBttn.Texture = LoadTexture("../Resources/Button/Return.png");
+        returnBttn.FrameHeight = (float)returnBttn.Texture.height / NUM_FRAMES;
+        returnBttn.SourceRec = { 0, 0, (float)returnBttn.Texture.width, returnBttn.FrameHeight };
 
         // Define button bounds on screen
-        rtrn.btnBounds = { curScreen.width - rtrn.button.width * 3 / 2.0f, curScreen.height - rtrn.button.height * 3 / NUM_FRAMES / 2.0f, (float)rtrn.button.width, rtrn.frameHeight };
-        rtrn.btnState = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-        rtrn.btnAction = false;
+        returnBttn.Bounds = { curScreen.width - returnBttn.Texture.width * 3 / 2.0f, curScreen.height - returnBttn.Texture.height * 3 / NUM_FRAMES / 2.0f, (float)returnBttn.Texture.width, returnBttn.FrameHeight };
+        returnBttn.State = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+        returnBttn.Action = false;
 
     }
 
@@ -44,19 +47,19 @@ namespace CreditsNmsp
 
         mousePoint = GetMousePosition();
 
-        if (CheckCollisionPointRec(mousePoint, rtrn.btnBounds))
+        if (CheckCollisionPointRec(mousePoint, returnBttn.Bounds))
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) rtrn.btnState = 2;
-            else rtrn.btnState = 1;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) returnBttn.State = 2;
+            else returnBttn.State = 1;
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) rtrn.btnAction = true;
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) returnBttn.Action = true;
         }
-        else rtrn.btnState = 0;
+        else returnBttn.State = 0;
 
-        if (rtrn.btnAction)
+        if (returnBttn.Action)
         {
             std::cout << "boton Credits precionado" << "\n";
-            rtrn.btnAction = false;
+            returnBttn.Action = false;
             ScreenManagerNam::Screens = ScreenManagerNam::Menu;
         }
     }
@@ -69,13 +72,14 @@ namespace CreditsNmsp
         DrawTexture(backgroundCred, 0, 0, WHITE);
         DrawTexture(logoTex, 0 + logoTex.width, curScreen.height - logoTex.height*2, WHITE);
 
-        DrawTextureRec(rtrn.button, rtrn.sourceRec, Vector2{ rtrn.btnBounds.x, rtrn.btnBounds.y }, WHITE);
+        DrawTextureRec(returnBttn.Texture, returnBttn.SourceRec, Vector2{ returnBttn.Bounds.x, returnBttn.Bounds.y }, WHITE);
 
         EndDrawing();
     }
 
     void UnloadCredits()
     {
+        UnloadTexture(returnBttn.Texture);
         UnloadTexture(backgroundCred);
         UnloadImage(creditsImg);
         std::cout << "Credits Unloaded." << '\n';

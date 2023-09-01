@@ -8,6 +8,7 @@
 #include "Instructions.h"
 #include "Credits.h"
 
+#include "Button.h"
 #include "Unloader.h"
 
 typedef struct   Screen
