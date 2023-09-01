@@ -25,6 +25,6 @@ namespace Game
 
     void UnloadGame()
     {
-        std::cout << "CGame Unloaded." << '\n';
+        std::cout << "Game Unloaded." << '\n';
     }
 }

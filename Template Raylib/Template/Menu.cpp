@@ -33,14 +33,16 @@ namespace Menu
         curScreen.width = 600;
         curScreen.height = 800;
 
-        back_ly = LoadImage("../Resources/Images/bk.jpg");
-        ImageResize(&back_ly, curScreen.width, curScreen.height);
-        background = LoadTextureFromImage(back_ly); // Parallax background
+        back_ly = LoadImage("../Resources/Images/bk.png");
+        ImageResize(&back_ly, curScreen.width/2, curScreen.height/2);
+        background = LoadTextureFromImage(back_ly); // background
 
-        front_ly = LoadImage("../Resources/Images/Bkg.png");
-        ImageResize(&front_ly, curScreen.width, curScreen.height);
-        FrontLayer_Background = LoadTextureFromImage(front_ly);  // Parallax Front Layer
+        front_ly = LoadImage("../Resources/Images/ggtt_white.png");
+        ImageResize(&front_ly, curScreen.width/2, curScreen.height/2);
+        FrontLayer_Background = LoadTextureFromImage(front_ly);  // Background Front Layer
 
+        UnloadImage(back_ly);
+        UnloadImage(front_ly);
 
         // playBttn Button
         playBttn.Texture = LoadTexture("../Resources/Button/play-Bttn.png");
@@ -73,13 +75,14 @@ namespace Menu
         playBttn.Action = false;
         instructionsBttn.Action = false;
         creditsBttn.Action = false;
-
-        scrollingBack -= 0.5f;
-        scrollingFront -= 0.9f;
     }
 
     void UpdateMenu()
     {
+
+        scrollingBack -= 0.5f;
+        scrollingFront -= 0.9f;
+
         DrawMenu();
 
         mousePoint = GetMousePosition();
@@ -147,6 +150,7 @@ namespace Menu
 
         ClearBackground(GetColor(0x052c46ff));
 
+       
         DrawTextureEx(background, Vector2{ scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
         DrawTextureEx(background, Vector2{ background.width * 2 + scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
 
@@ -169,8 +173,6 @@ namespace Menu
         UnloadTexture(creditsBttn.Texture);
         UnloadTexture(background);
         UnloadTexture(FrontLayer_Background);
-        UnloadImage(back_ly);
-        UnloadImage(front_ly);
         std::cout << "Menu Unloaded." << '\n';
     }
 }

@@ -3,5 +3,7 @@
 
 namespace Unloader
 {
+	void UnloadMenu();
+	void UnloadGame();
 	void UnloadAll();
 }
