@@ -20,14 +20,6 @@ namespace Menu
     static Vector2 mousePoint;
 
 
-
-    /*
-    * Alocate buttons on screen:
-    * take size of button, size of screen ,screen size - empty space in between buttons and divide that x amount of buttons and that will give you the size wanted. 
-    * Ej: (screen Height - 400) / 4buttons = x
-    * Button height = x;
-    */
-
     void InitMenu() // Init
     {
         curScreen.width = 600;

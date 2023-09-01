@@ -18,7 +18,7 @@ namespace Game
 
         BeginDrawing();
 
-        ClearBackground(GetColor(0x052c46ff));
+
 
         EndDrawing();
     }
