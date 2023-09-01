@@ -3,7 +3,7 @@
 
 namespace Button
 {
-    typedef struct   ButtonStruct
+    struct   newButton
     {
         Texture2D Texture;
         float FrameHeight;
@@ -11,5 +11,5 @@ namespace Button
         Rectangle Bounds;
         int State;
         bool Action;
-    }newButton;
+    };
 }
