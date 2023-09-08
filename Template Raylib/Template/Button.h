@@ -12,4 +12,12 @@ namespace Button
         int State;
         bool Action;
     };
+
+    struct NewCreditButton
+    {
+        Rectangle Bounds;
+        bool Action;
+        Color btnColor;
+        const char* btnUrl;
+    };
 }

@@ -1,24 +1,32 @@
 #include "Credits.h"
 
+
 namespace CreditsNmsp
 {
+
     Button::newButton returnBttn;
+    Button::NewCreditButton dev;
 
     Texture2D backgroundCred;
     Texture2D logoTex;
 
-    static Vector2 mousePoint; 
+    static Vector2 mousePoint;
     static Image creditsImg;
     static Image logo;
-
-    int amountOfCredits = 0;
 
 
     void InitCredits() // Init
     {
-        amountOfCredits = 3;
         curScreen.width = 600;
         curScreen.height = 800;
+
+        dev.Bounds.width = curScreen.width/1.2;
+        dev.Bounds.height = curScreen.height / 14; // the screen is divided by the inteded amount of credit holders + 2 this leaves a margin 
+        dev.Bounds.x = (curScreen.width / 2) - (dev.Bounds.width / 2);
+        dev.Bounds.y = (curScreen.height / 15) * 4;
+        dev.btnColor = { 80, 80, 80, 255 }; // DARKGRAY
+        dev.btnUrl = "https://github.com/BadAssGo4t/Template";
+
 
         creditsImg = LoadImage("../Resources/Credits/CreditsGray.png");
         ImageResize(&creditsImg, curScreen.width, curScreen.height);
@@ -47,6 +55,15 @@ namespace CreditsNmsp
 
         mousePoint = GetMousePosition();
 
+        if (CheckCollisionPointRec(mousePoint, dev.Bounds))
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) dev.btnColor = { 255, 203, 0, 255 };
+            else dev.btnColor = { 200, 200, 200, 255 };
+
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) dev.Action = true;
+        }
+        else dev.btnColor = { 80, 80, 80, 255 };
+
         if (CheckCollisionPointRec(mousePoint, returnBttn.Bounds))
         {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) returnBttn.State = 2;
@@ -58,13 +75,20 @@ namespace CreditsNmsp
 
         if (returnBttn.Action)
         {
-            std::cout << "boton Credits precionado" << "\n";
+            std::cout << "boton Credits pressed" << "\n";
             returnBttn.Action = false;
             ScreenManagerNam::Screens = ScreenManagerNam::Menu;
         }
+        if (dev.Action)
+        {
+            std::cout << "boton dev pressed" << "\n";
+            dev.Action = false;
+            OpenURL(dev.btnUrl);
+        }
     }
 
-    void DrawCredits() {
+    void DrawCredits() 
+    {
         BeginDrawing();
 
         ClearBackground(GetColor(0x052c46ff));
@@ -73,6 +97,8 @@ namespace CreditsNmsp
         DrawTexture(logoTex, 0 + logoTex.width, curScreen.height - logoTex.height*2, WHITE);
 
         DrawTextureRec(returnBttn.Texture, returnBttn.SourceRec, Vector2{ returnBttn.Bounds.x, returnBttn.Bounds.y }, WHITE);
+
+        DrawRectangleRec(dev.Bounds, dev.btnColor);
 
         EndDrawing();
     }

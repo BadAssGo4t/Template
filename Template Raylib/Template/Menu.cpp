@@ -3,7 +3,7 @@
 
 namespace Menu
 {
-    
+
     Button::newButton playBttn;
     Button::newButton instructionsBttn;
     Button::newButton creditsBttn;
@@ -19,24 +19,24 @@ namespace Menu
 
     static Vector2 mousePoint;
 
-
     void InitMenu() // Init
     {
         curScreen.width = 600;
         curScreen.height = 800;
+        InitWindow(curScreen.width, curScreen.height, "Game");
 
         back_ly = LoadImage("../Resources/Images/bk.png");
-        ImageResize(&back_ly, curScreen.width/2, curScreen.height/2);
+        ImageResize(&back_ly, curScreen.width / 2, curScreen.height / 2);
         background = LoadTextureFromImage(back_ly); // background
 
-        front_ly = LoadImage("../Resources/Images/ggtt_white.png");
-        ImageResize(&front_ly, curScreen.width/2, curScreen.height/2);
-        FrontLayer_Background = LoadTextureFromImage(front_ly);  // Background Front Layer
+       // front_ly = LoadImage("../Resources/Images/ggtt_white.png");
+       // ImageResize(&front_ly, curScreen.width/2, curScreen.height/2);
+       // FrontLayer_Background = LoadTextureFromImage(front_ly);  // Background Front Layer
 
         UnloadImage(back_ly);
-        UnloadImage(front_ly);
+        // UnloadImage(front_ly);
 
-        // playBttn Button
+         // playBttn Button
         playBttn.Texture = LoadTexture("../Resources/Button/play-Bttn.png");
         playBttn.FrameHeight = (float)playBttn.Texture.height / NUM_FRAMES;
         playBttn.SourceRec = { 0, 0, (float)playBttn.Texture.width, playBttn.FrameHeight };
@@ -64,26 +64,22 @@ namespace Menu
         creditsBttn.State = 0;
         creditsBttn.Action = false;
 
-        playBttn.Action = false;
-        instructionsBttn.Action = false;
-        creditsBttn.Action = false;
     }
 
     void UpdateMenu()
     {
-
         scrollingBack -= 0.5f;
         scrollingFront -= 0.9f;
-
-        DrawMenu();
 
         mousePoint = GetMousePosition();
 
         if (scrollingBack <= -background.width * 2) scrollingBack = 0;
         if (scrollingFront <= -FrontLayer_Background.width * 2) scrollingFront = 0;
 
+        DrawMenu();
+
         // Check button state
-        if (CheckCollisionPointRec(mousePoint, playBttn.Bounds))
+        if (CheckCollisionPointRec(mousePoint, playBttn.Bounds)) // Play Button
         {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) playBttn.State = 2;
             else playBttn.State = 1;
@@ -92,7 +88,7 @@ namespace Menu
         }
         else playBttn.State = 0;
 
-        if (CheckCollisionPointRec(mousePoint, instructionsBttn.Bounds))
+        if (CheckCollisionPointRec(mousePoint, instructionsBttn.Bounds)) // Instructions Button
         {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) instructionsBttn.State = 2;
             else instructionsBttn.State = 1;
@@ -101,7 +97,7 @@ namespace Menu
         }
         else instructionsBttn.State = 0;
 
-        if (CheckCollisionPointRec(mousePoint, creditsBttn.Bounds))
+        if (CheckCollisionPointRec(mousePoint, creditsBttn.Bounds)) // Credits Button
         {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) creditsBttn.State = 2;
             else creditsBttn.State = 1;
@@ -115,16 +111,21 @@ namespace Menu
         {
             std::cout << "boton playBttn precionado" << "\n";
             playBttn.Action = false;
+            Game::InitGame();
+            ScreenManagerNam::Screens = ScreenManagerNam::Game;
         }
+
         if (instructionsBttn.Action)
         {
             std::cout << "boton instructionsBttn precionado" << "\n";
             instructionsBttn.Action = false;
         }
+
         if (creditsBttn.Action)
         {
             std::cout << "boton creditsBttn precionado" << "\n";
             creditsBttn.Action = false;
+            CreditsNmsp::InitCredits();
             ScreenManagerNam::Screens = ScreenManagerNam::Credits;
         }
 
@@ -132,8 +133,6 @@ namespace Menu
         playBttn.SourceRec.y = playBttn.State * playBttn.FrameHeight;
         instructionsBttn.SourceRec.y = instructionsBttn.State * instructionsBttn.FrameHeight;
         creditsBttn.SourceRec.y = creditsBttn.State * creditsBttn.FrameHeight;
-
-        // TODO: Update your variables here
     }
 
     void DrawMenu() {
@@ -142,12 +141,12 @@ namespace Menu
 
         ClearBackground(GetColor(0x052c46ff));
 
-       
+
         DrawTextureEx(background, Vector2{ scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
         DrawTextureEx(background, Vector2{ background.width * 2 + scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
 
-        DrawTextureEx(FrontLayer_Background, Vector2{ scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
-        DrawTextureEx(FrontLayer_Background, Vector2{ FrontLayer_Background.width * 2 + scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
+        //DrawTextureEx(FrontLayer_Background, Vector2{ scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
+        //DrawTextureEx(FrontLayer_Background, Vector2{ FrontLayer_Background.width * 2 + scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
 
         DrawText("Game", curScreen.width / 2 - MeasureText("Game", 40), 40, 80, LIGHTGRAY);
 
@@ -168,4 +167,3 @@ namespace Menu
         std::cout << "Menu Unloaded." << '\n';
     }
 }
-   
