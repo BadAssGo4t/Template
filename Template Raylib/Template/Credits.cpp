@@ -7,12 +7,15 @@ namespace CreditsNmsp
     Button::newButton returnBttn;
     Button::NewCreditButton dev;
 
-    Texture2D backgroundCred;
-    Texture2D logoTex;
+    static Image logo;
+    static Image creditsImg;
+    static Image background;
+
+    static Texture2D backgroundCred;
+    static Texture2D backgroundTex;
+    static Texture2D logoTex;
 
     static Vector2 mousePoint;
-    static Image creditsImg;
-    static Image logo;
 
 
     void InitCredits() // Init
@@ -25,8 +28,14 @@ namespace CreditsNmsp
         dev.Bounds.x = (curScreen.width / 2) - (dev.Bounds.width / 2);
         dev.Bounds.y = (curScreen.height / 15) * 4;
         dev.btnColor = { 80, 80, 80, 255 }; // DARKGRAY
+        dev.name = "Game Made By: Estanislao";
         dev.btnUrl = "https://github.com/BadAssGo4t/Template";
 
+
+        background = LoadImage("../Resources/Images/bk.png");
+        ImageResize(&background, curScreen.width / 2, curScreen.height / 2);
+        backgroundTex = LoadTextureFromImage(background); // background
+        UnloadImage(background);
 
         creditsImg = LoadImage("../Resources/Credits/CreditsGray.png");
         ImageResize(&creditsImg, curScreen.width, curScreen.height);
@@ -93,12 +102,17 @@ namespace CreditsNmsp
 
         ClearBackground(GetColor(0x052c46ff));
 
+        DrawTexture(backgroundTex, 0.0f, 2.0f, WHITE);
+
         DrawTexture(backgroundCred, 0, 0, WHITE);
         DrawTexture(logoTex, 0 + logoTex.width, curScreen.height - logoTex.height*2, WHITE);
 
         DrawTextureRec(returnBttn.Texture, returnBttn.SourceRec, Vector2{ returnBttn.Bounds.x, returnBttn.Bounds.y }, WHITE);
-
         DrawRectangleRec(dev.Bounds, dev.btnColor);
+
+        DrawRectangleLinesEx(dev.Bounds, 3.5f, BLACK);
+
+        DrawText(dev.name, curScreen.width / 2 - MeasureText(dev.name, 30) / 2, dev.Bounds.height + dev.Bounds.y / 1.25f, 30, BLACK);
 
         EndDrawing();
     }
@@ -107,6 +121,8 @@ namespace CreditsNmsp
     {
         UnloadTexture(returnBttn.Texture);
         UnloadTexture(backgroundCred);
+        UnloadTexture(backgroundTex);
+        UnloadTexture(logoTex);
         UnloadImage(creditsImg);
         std::cout << "Credits Unloaded." << '\n';
     }

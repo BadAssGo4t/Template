@@ -19,5 +19,6 @@ namespace Button
         bool Action;
         Color btnColor;
         const char* btnUrl;
+        const char* name;
     };
 }

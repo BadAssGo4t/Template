@@ -9,15 +9,12 @@ namespace Menu
     Button::newButton creditsBttn;
 
     static Image back_ly;
-    static Image front_ly;
-
-    Texture2D background;
-    Texture2D FrontLayer_Background;
+    static Texture2D background;
 
     float scrollingBack = 0.0f;
     float scrollingFront = 0.0f;
 
-    static Vector2 mousePoint;
+    extern Vector2 mousePoint;
 
     void InitMenu() // Init
     {
@@ -28,10 +25,6 @@ namespace Menu
         back_ly = LoadImage("../Resources/Images/bk.png");
         ImageResize(&back_ly, curScreen.width / 2, curScreen.height / 2);
         background = LoadTextureFromImage(back_ly); // background
-
-       // front_ly = LoadImage("../Resources/Images/ggtt_white.png");
-       // ImageResize(&front_ly, curScreen.width/2, curScreen.height/2);
-       // FrontLayer_Background = LoadTextureFromImage(front_ly);  // Background Front Layer
 
         UnloadImage(back_ly);
         // UnloadImage(front_ly);
@@ -74,7 +67,6 @@ namespace Menu
         mousePoint = GetMousePosition();
 
         if (scrollingBack <= -background.width * 2) scrollingBack = 0;
-        if (scrollingFront <= -FrontLayer_Background.width * 2) scrollingFront = 0;
 
         DrawMenu();
 
@@ -145,9 +137,6 @@ namespace Menu
         DrawTextureEx(background, Vector2{ scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
         DrawTextureEx(background, Vector2{ background.width * 2 + scrollingBack, 20 }, 0.0f, 2.0f, WHITE);
 
-        //DrawTextureEx(FrontLayer_Background, Vector2{ scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
-        //DrawTextureEx(FrontLayer_Background, Vector2{ FrontLayer_Background.width * 2 + scrollingFront, 20 }, 0.0f, 2.0f, WHITE);
-
         DrawText("Game", curScreen.width / 2 - MeasureText("Game", 40), 40, 80, LIGHTGRAY);
 
         DrawTextureRec(playBttn.Texture, playBttn.SourceRec, Vector2{ playBttn.Bounds.x, playBttn.Bounds.y }, WHITE);
@@ -163,7 +152,6 @@ namespace Menu
         UnloadTexture(instructionsBttn.Texture);
         UnloadTexture(creditsBttn.Texture);
         UnloadTexture(background);
-        UnloadTexture(FrontLayer_Background);
         std::cout << "Menu Unloaded." << '\n';
     }
 }
