@@ -12,12 +12,15 @@
 #include "Button.h"
 #include "Unloader.h"
 
-typedef struct   Screen
+
+struct   Screen
 {
     int width;
     int height;
-} Screen;
+	const char* name;
+};
 static Screen curScreen;
+
 
 namespace ScreenManagerNam
 {
@@ -30,6 +33,7 @@ namespace ScreenManagerNam
 		End
 	};
 	extern GameScreen Screens;
+	
 
 	int ScreenManager();
 }

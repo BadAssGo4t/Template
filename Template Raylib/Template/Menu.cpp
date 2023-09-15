@@ -14,13 +14,15 @@ namespace Menu
     float scrollingBack = 0.0f;
     float scrollingFront = 0.0f;
 
-    extern Vector2 mousePoint;
+    static Vector2 mousePoint;
 
     void InitMenu() // Init
     {
         curScreen.width = 600;
         curScreen.height = 800;
-        InitWindow(curScreen.width, curScreen.height, "Game");
+        curScreen.name = "Game";
+
+        InitWindow(curScreen.width, curScreen.height, curScreen.name);
 
         back_ly = LoadImage("../Resources/Images/bk.png");
         ImageResize(&back_ly, curScreen.width / 2, curScreen.height / 2);

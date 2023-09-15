@@ -6,6 +6,7 @@ namespace CreditsNmsp
 
     Button::newButton returnBttn;
     Button::NewCreditButton dev;
+    Button::NewCreditButton lib;
 
     static Image logo;
     static Image creditsImg;
@@ -22,6 +23,7 @@ namespace CreditsNmsp
     {
         curScreen.width = 600;
         curScreen.height = 800;
+        curScreen.name = "Game - Credits";
 
         dev.Bounds.width = curScreen.width/1.2;
         dev.Bounds.height = curScreen.height / 14; // the screen is divided by the inteded amount of credit holders + 2 this leaves a margin 
@@ -31,9 +33,17 @@ namespace CreditsNmsp
         dev.name = "Game Made By: Estanislao";
         dev.btnUrl = "https://github.com/BadAssGo4t/Template";
 
+        lib.Bounds.width = curScreen.width / 1.2;
+        lib.Bounds.height = curScreen.height / 14; // the screen is divided by the inteded amount of credit holders + 2 this leaves a margin 
+        lib.Bounds.x = (curScreen.width / 2) - (dev.Bounds.width / 2);
+        lib.Bounds.y = (curScreen.height / 15) * 8;
+        lib.btnColor = { 80, 80, 80, 255 }; // DARKGRAY
+        lib.name = "Made Using: Raylib";
+        lib.btnUrl = "https://www.raylib.com/index.html";
+
 
         background = LoadImage("../Resources/Images/bk.png");
-        ImageResize(&background, curScreen.width / 2, curScreen.height / 2);
+        ImageResize(&background, curScreen.width, curScreen.height);
         backgroundTex = LoadTextureFromImage(background); // background
         UnloadImage(background);
 
@@ -64,7 +74,8 @@ namespace CreditsNmsp
 
         mousePoint = GetMousePosition();
 
-        if (CheckCollisionPointRec(mousePoint, dev.Bounds))
+
+        if (CheckCollisionPointRec(mousePoint, dev.Bounds)) //Checks state of the DEV BTTN
         {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) dev.btnColor = { 255, 203, 0, 255 };
             else dev.btnColor = { 200, 200, 200, 255 };
@@ -73,7 +84,16 @@ namespace CreditsNmsp
         }
         else dev.btnColor = { 80, 80, 80, 255 };
 
-        if (CheckCollisionPointRec(mousePoint, returnBttn.Bounds))
+        if (CheckCollisionPointRec(mousePoint, lib.Bounds)) //Checks state of the LIB BTTN
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) lib.btnColor = { 255, 203, 0, 255 };
+            else lib.btnColor = { 200, 200, 200, 255 };
+
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) lib.Action = true;
+        }
+        else lib.btnColor = { 80, 80, 80, 255 };
+
+        if (CheckCollisionPointRec(mousePoint, returnBttn.Bounds)) //Checks state of the RETURN BTTN
         {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) returnBttn.State = 2;
             else returnBttn.State = 1;
@@ -82,17 +102,23 @@ namespace CreditsNmsp
         }
         else returnBttn.State = 0;
 
-        if (returnBttn.Action)
+        if (returnBttn.Action) // Button RETURN PRESSED
         {
             std::cout << "boton Credits pressed" << "\n";
             returnBttn.Action = false;
             ScreenManagerNam::Screens = ScreenManagerNam::Menu;
         }
-        if (dev.Action)
+        if (dev.Action) // Button DEV PRESSED
         {
             std::cout << "boton dev pressed" << "\n";
             dev.Action = false;
             OpenURL(dev.btnUrl);
+        }
+        if (lib.Action) // Button LIB PRESSED
+        {
+            std::cout << "boton lib pressed" << "\n";
+            lib.Action = false;
+            OpenURL(lib.btnUrl);
         }
     }
 
@@ -108,11 +134,14 @@ namespace CreditsNmsp
         DrawTexture(logoTex, 0 + logoTex.width, curScreen.height - logoTex.height*2, WHITE);
 
         DrawTextureRec(returnBttn.Texture, returnBttn.SourceRec, Vector2{ returnBttn.Bounds.x, returnBttn.Bounds.y }, WHITE);
+
         DrawRectangleRec(dev.Bounds, dev.btnColor);
-
         DrawRectangleLinesEx(dev.Bounds, 3.5f, BLACK);
+        DrawText(dev.name, curScreen.width / 2 - MeasureText(dev.name, 30) / 2, dev.Bounds.y + 15/*the + 15 represents half of the text size*/, 30, BLACK);
 
-        DrawText(dev.name, curScreen.width / 2 - MeasureText(dev.name, 30) / 2, dev.Bounds.height + dev.Bounds.y / 1.25f, 30, BLACK);
+        DrawRectangleRec(lib.Bounds, lib.btnColor);
+        DrawRectangleLinesEx(lib.Bounds, 3.5f, BLACK);
+        DrawText(lib.name, curScreen.width / 2 - MeasureText(lib.name, 30) / 2, lib.Bounds.y + 15, 30, BLACK); 
 
         EndDrawing();
     }
