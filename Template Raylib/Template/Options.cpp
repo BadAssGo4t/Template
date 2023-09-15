@@ -5,11 +5,7 @@ namespace Options
 
     void InitOptions() // Init
     {
-        curScreen.width = 600;
-        curScreen.height = 800;
-        curScreen.name = "Game - Options";
 
-        InitWindow(curScreen.width, curScreen.height, curScreen.name);
     }
 
     void UpdateOptions()

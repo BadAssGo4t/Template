@@ -20,5 +20,6 @@ namespace Button
         Color btnColor;
         const char* btnUrl;
         const char* name;
+        float frame = 3.5f;
     };
 }

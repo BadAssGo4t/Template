@@ -4,9 +4,9 @@
 namespace CreditsNmsp
 {
 
-    Button::newButton returnBttn;
-    Button::NewCreditButton dev;
-    Button::NewCreditButton lib;
+    static Button::newButton returnBttn;
+    static Button::NewCreditButton dev;
+    static Button::NewCreditButton lib;
 
     static Image logo;
     static Image creditsImg;
@@ -24,6 +24,8 @@ namespace CreditsNmsp
         curScreen.width = 600;
         curScreen.height = 800;
         curScreen.name = "Game - Credits";
+        SetWindowSize(curScreen.width, curScreen.height);
+        SetWindowTitle(curScreen.name);
 
         dev.Bounds.width = curScreen.width/1.2;
         dev.Bounds.height = curScreen.height / 14; // the screen is divided by the inteded amount of credit holders + 2 this leaves a margin 
@@ -47,7 +49,7 @@ namespace CreditsNmsp
         backgroundTex = LoadTextureFromImage(background); // background
         UnloadImage(background);
 
-        creditsImg = LoadImage("../Resources/Credits/CreditsGray.png");
+        creditsImg = LoadImage("../Resources/Credits/CreditsWhite.png");
         ImageResize(&creditsImg, curScreen.width, curScreen.height);
 
         logo = LoadImage("../Resources/Images/SymBlack.png");
@@ -136,11 +138,11 @@ namespace CreditsNmsp
         DrawTextureRec(returnBttn.Texture, returnBttn.SourceRec, Vector2{ returnBttn.Bounds.x, returnBttn.Bounds.y }, WHITE);
 
         DrawRectangleRec(dev.Bounds, dev.btnColor);
-        DrawRectangleLinesEx(dev.Bounds, 3.5f, BLACK);
+        DrawRectangleLinesEx(dev.Bounds, lib.frame, BLACK);
         DrawText(dev.name, curScreen.width / 2 - MeasureText(dev.name, 30) / 2, dev.Bounds.y + 15/*the + 15 represents half of the text size*/, 30, BLACK);
 
         DrawRectangleRec(lib.Bounds, lib.btnColor);
-        DrawRectangleLinesEx(lib.Bounds, 3.5f, BLACK);
+        DrawRectangleLinesEx(lib.Bounds, lib.frame, BLACK);
         DrawText(lib.name, curScreen.width / 2 - MeasureText(lib.name, 30) / 2, lib.Bounds.y + 15, 30, BLACK); 
 
         EndDrawing();
