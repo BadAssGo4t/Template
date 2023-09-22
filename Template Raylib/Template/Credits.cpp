@@ -1,12 +1,13 @@
 #include "Credits.h"
-
+//using namespace Button;
 
 namespace CreditsNmsp
 {
 
-    static Button::newButton returnBttn;
-    static Button::NewCreditButton dev;
+   // static Button::newButton returnBttn;
     static Button::NewCreditButton lib;
+    static Button::NewCreditButton dev;
+    static Button::ReturnButton returnBttnx;
 
     static Image logo;
     static Image creditsImg;
@@ -15,35 +16,29 @@ namespace CreditsNmsp
     static Texture2D backgroundCred;
     static Texture2D backgroundTex;
     static Texture2D logoTex;
+    static Texture2D rtn;
 
     static Vector2 mousePoint;
 
-
     void InitCredits() // Init
     {
+        
         curScreen.width = 600;
         curScreen.height = 800;
         curScreen.name = "Game - Credits";
         SetWindowSize(curScreen.width, curScreen.height);
         SetWindowTitle(curScreen.name);
 
-        dev.Bounds.width = curScreen.width/1.2;
-        dev.Bounds.height = curScreen.height / 14; // the screen is divided by the inteded amount of credit holders + 2 this leaves a margin 
-        dev.Bounds.x = (curScreen.width / 2) - (dev.Bounds.width / 2);
-        dev.Bounds.y = (curScreen.height / 15) * 4;
-        dev.btnColor = { 80, 80, 80, 255 }; // DARKGRAY
-        dev.name = "Game Made By: Estanislao";
-        dev.btnUrl = "https://github.com/BadAssGo4t/Template";
+        dev.setBounds(curScreen.width / 1.2, curScreen.height / 14, (curScreen.width / 2) - (dev.Bounds.width / 2), (curScreen.height / 15) * 4);
+        dev.setCreditButton({ 80, 80, 80, 255 }/*DARKGRAY*/, "https://github.com/BadAssGo4t/Template", "Game Made By: Estanislao");
 
-        lib.Bounds.width = curScreen.width / 1.2;
-        lib.Bounds.height = curScreen.height / 14; // the screen is divided by the inteded amount of credit holders + 2 this leaves a margin 
-        lib.Bounds.x = (curScreen.width / 2) - (dev.Bounds.width / 2);
-        lib.Bounds.y = (curScreen.height / 15) * 8;
-        lib.btnColor = { 80, 80, 80, 255 }; // DARKGRAY
-        lib.name = "Made Using: Raylib";
-        lib.btnUrl = "https://www.raylib.com/index.html";
+        lib.setBounds(curScreen.width / 1.2, curScreen.height / 14, (curScreen.width / 2) - (dev.Bounds.width / 2), (curScreen.height / 15) * 8);
+        lib.setCreditButton({ 80, 80, 80, 255 }/*DARKGRAY*/, "https://www.raylib.com/index.html", "Made Using: Raylib");
 
-
+        rtn = LoadTexture("../Resources/Button/Return.png");
+        returnBttnx.setMenuButton(rtn, (float)returnBttnx.Texture.height / NUM_FRAMES, 0.0f, 0.0f, (float)returnBttnx.Texture.width, 0);
+        returnBttnx.setBounds(curScreen.width - returnBttnx.Texture.width * 3 / 2.0f, curScreen.height - returnBttnx.Texture.height * 3 / NUM_FRAMES / 2.0f, (float)returnBttnx.Texture.width, (float)returnBttnx.Texture.height);
+        
         background = LoadImage("../Resources/Images/bk.png");
         ImageResize(&background, curScreen.width, curScreen.height);
         backgroundTex = LoadTextureFromImage(background); // background
@@ -59,6 +54,7 @@ namespace CreditsNmsp
 
         logoTex = LoadTextureFromImage(logo);
 
+        /*
         returnBttn.Texture = LoadTexture("../Resources/Button/Return.png");
         returnBttn.FrameHeight = (float)returnBttn.Texture.height / NUM_FRAMES;
         returnBttn.SourceRec = { 0, 0, (float)returnBttn.Texture.width, returnBttn.FrameHeight };
@@ -67,7 +63,7 @@ namespace CreditsNmsp
         returnBttn.Bounds = { curScreen.width - returnBttn.Texture.width * 3 / 2.0f, curScreen.height - returnBttn.Texture.height * 3 / NUM_FRAMES / 2.0f, (float)returnBttn.Texture.width, returnBttn.FrameHeight };
         returnBttn.State = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
         returnBttn.Action = false;
-
+        */
     }
 
     void UpdateCredits()
@@ -79,48 +75,57 @@ namespace CreditsNmsp
 
         if (CheckCollisionPointRec(mousePoint, dev.Bounds)) //Checks state of the DEV BTTN
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) dev.btnColor = { 255, 203, 0, 255 };
-            else dev.btnColor = { 200, 200, 200, 255 };
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))dev.changeColor({ 255, 203, 0, 255 });
+            else dev.changeColor({ 200, 200, 200, 255 });
 
             if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) dev.Action = true;
         }
-        else dev.btnColor = { 80, 80, 80, 255 };
+        else dev.changeColor({ 80, 80, 80, 255 });
 
-        if (CheckCollisionPointRec(mousePoint, lib.Bounds)) //Checks state of the LIB BTTN
+        if (CheckCollisionPointRec(mousePoint, lib.Bounds)) //Checks state of the DEV BTTN
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) lib.btnColor = { 255, 203, 0, 255 };
-            else lib.btnColor = { 200, 200, 200, 255 };
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))lib.changeColor({ 255, 203, 0, 255 });
+            else lib.changeColor({ 200, 200, 200, 255 });
 
             if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) lib.Action = true;
         }
-        else lib.btnColor = { 80, 80, 80, 255 };
+        else lib.changeColor({ 80, 80, 80, 255 });
 
-        if (CheckCollisionPointRec(mousePoint, returnBttn.Bounds)) //Checks state of the RETURN BTTN
+   
+        if (CheckCollisionPointRec(mousePoint, returnBttnx.Bounds)) //Checks state of the RETURN BTTN
         {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) returnBttn.State = 2;
-            else returnBttn.State = 1;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) returnBttnx.State = 2;
+            else returnBttnx.State = 1;
 
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) returnBttn.Action = true;
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) returnBttnx.Action = true;
         }
-        else returnBttn.State = 0;
+        else returnBttnx.State = 0;
+      
 
+        /*
         if (returnBttn.Action) // Button RETURN PRESSED
         {
             std::cout << "boton Credits pressed" << "\n";
             returnBttn.Action = false;
             ScreenManagerNam::Screens = ScreenManagerNam::Menu;
         }
-        if (dev.Action) // Button DEV PRESSED
+        */
+
+        if (returnBttnx.Action) // Button RETURN PRESSED
         {
-            std::cout << "boton dev pressed" << "\n";
-            dev.Action = false;
-            OpenURL(dev.btnUrl);
+            std::cout << "boton Credits pressed" << "\n";
+            returnBttnx.Action = false;
+            ScreenManagerNam::Screens = ScreenManagerNam::Menu;
         }
-        if (lib.Action) // Button LIB PRESSED
+
+        if (dev.Action)
         {
-            std::cout << "boton lib pressed" << "\n";
-            lib.Action = false;
-            OpenURL(lib.btnUrl);
+            dev.openUrl();
+        }
+
+        if (lib.Action)
+        {
+            lib.openUrl();
         }
     }
 
@@ -135,15 +140,16 @@ namespace CreditsNmsp
         DrawTexture(backgroundCred, 0, 0, WHITE);
         DrawTexture(logoTex, 0 + logoTex.width, curScreen.height - logoTex.height*2, WHITE);
 
-        DrawTextureRec(returnBttn.Texture, returnBttn.SourceRec, Vector2{ returnBttn.Bounds.x, returnBttn.Bounds.y }, WHITE);
-
+       
         DrawRectangleRec(dev.Bounds, dev.btnColor);
-        DrawRectangleLinesEx(dev.Bounds, lib.frame, BLACK);
-        DrawText(dev.name, curScreen.width / 2 - MeasureText(dev.name, 30) / 2, dev.Bounds.y + 15/*the + 15 represents half of the text size*/, 30, BLACK);
+        DrawRectangleLinesEx(dev.Bounds, dev.frame, BLACK);
+        DrawText(dev.name, curScreen.width / 2 - MeasureText(dev.name, 30) / 2, dev.Bounds.y + 15, 30, BLACK);
 
         DrawRectangleRec(lib.Bounds, lib.btnColor);
         DrawRectangleLinesEx(lib.Bounds, lib.frame, BLACK);
         DrawText(lib.name, curScreen.width / 2 - MeasureText(lib.name, 30) / 2, lib.Bounds.y + 15, 30, BLACK); 
+
+        DrawTextureRec(returnBttnx.Texture, returnBttnx.SourceRec, Vector2{ returnBttnx.Bounds.x, returnBttnx.Bounds.y }, WHITE);
 
         EndDrawing();
     }
@@ -151,6 +157,7 @@ namespace CreditsNmsp
     void UnloadCredits()
     {
         UnloadTexture(returnBttn.Texture);
+        UnloadTexture(rtn);
         UnloadTexture(backgroundCred);
         UnloadTexture(backgroundTex);
         UnloadTexture(logoTex);

@@ -18,6 +18,7 @@ namespace Menu
 
     void InitMenu() // Init
     {
+
         curScreen.width = 600;
         curScreen.height = 800;
         curScreen.name = "Game";
