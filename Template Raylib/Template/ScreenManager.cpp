@@ -26,6 +26,7 @@ namespace ScreenManagerNam
 
 	static void Change()
 	{
+		
 		switch (Screens)
 		{
 
@@ -47,6 +48,7 @@ namespace ScreenManagerNam
 		} break;
 
 		}
+
 
 	}
 }

@@ -33,7 +33,7 @@ namespace ScreenManagerNam
 		End
 	};
 	extern GameScreen Screens;
-	
+
 
 	int ScreenManager();
 }

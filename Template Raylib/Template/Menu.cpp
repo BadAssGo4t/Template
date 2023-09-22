@@ -15,6 +15,7 @@ namespace Menu
     float scrollingFront = 0.0f;
 
     static Vector2 mousePoint;
+    static bool creditsIni = false;
 
     void InitMenu() // Init
     {
@@ -24,6 +25,7 @@ namespace Menu
         curScreen.name = "Game";
 
         InitWindow(curScreen.width, curScreen.height, curScreen.name);
+
 
         back_ly = LoadImage("../Resources/Images/bk.png");
         ImageResize(&back_ly, curScreen.width / 2, curScreen.height / 2);
@@ -59,7 +61,7 @@ namespace Menu
         creditsBttn.Bounds = { curScreen.width / 2.0f - creditsBttn.Texture.width / 2.0f, curScreen.height / 2.0f + creditsBttn.Texture.height * 2 / NUM_FRAMES / 2.0f, (float)creditsBttn.Texture.width, creditsBttn.FrameHeight };
         creditsBttn.State = 0;
         creditsBttn.Action = false;
-
+       
     }
 
     void UpdateMenu()
@@ -120,7 +122,13 @@ namespace Menu
         {
             std::cout << "boton creditsBttn precionado" << "\n";
             creditsBttn.Action = false;
-            CreditsNmsp::InitCredits();
+            if (creditsIni != true)
+            {
+                CreditsNmsp::InitCredits();
+                CreditsNmsp::InitCredits();
+                creditsIni = true;
+            }
+            std::cout << "opening credits";
             ScreenManagerNam::Screens = ScreenManagerNam::Credits;
         }
 
@@ -155,6 +163,7 @@ namespace Menu
         UnloadTexture(instructionsBttn.Texture);
         UnloadTexture(creditsBttn.Texture);
         UnloadTexture(background);
+        creditsIni = false;
         std::cout << "Menu Unloaded." << '\n';
     }
 }

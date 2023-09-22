@@ -4,7 +4,6 @@
 namespace CreditsNmsp
 {
 
-   // static Button::newButton returnBttn;
     static Button::NewCreditButton lib;
     static Button::NewCreditButton dev;
     static Button::ReturnButton returnBttnx;
@@ -22,14 +21,14 @@ namespace CreditsNmsp
 
     void InitCredits() // Init
     {
-        
         curScreen.width = 600;
         curScreen.height = 800;
         curScreen.name = "Game - Credits";
         SetWindowSize(curScreen.width, curScreen.height);
         SetWindowTitle(curScreen.name);
 
-        dev.setBounds(curScreen.width / 1.2, curScreen.height / 14, (curScreen.width / 2) - (dev.Bounds.width / 2), (curScreen.height / 15) * 4);
+
+        dev.setBounds(curScreen.width / 1.2, curScreen.height / 14, (curScreen.width / 2) - (dev.Bounds.width / 2), (curScreen.height / 15) * 4 /*height based on the division of the screen*/);
         dev.setCreditButton({ 80, 80, 80, 255 }/*DARKGRAY*/, "https://github.com/BadAssGo4t/Template", "Game Made By: Estanislao");
 
         lib.setBounds(curScreen.width / 1.2, curScreen.height / 14, (curScreen.width / 2) - (dev.Bounds.width / 2), (curScreen.height / 15) * 8);
@@ -37,8 +36,9 @@ namespace CreditsNmsp
 
         rtn = LoadTexture("../Resources/Button/Return.png");
         returnBttnx.setMenuButton(rtn, (float)returnBttnx.Texture.height / NUM_FRAMES, 0.0f, 0.0f, (float)returnBttnx.Texture.width, 0);
-        returnBttnx.setBounds(curScreen.width - returnBttnx.Texture.width * 3 / 2.0f, curScreen.height - returnBttnx.Texture.height * 3 / NUM_FRAMES / 2.0f, (float)returnBttnx.Texture.width, (float)returnBttnx.Texture.height);
+        returnBttnx.setBounds((float)returnBttnx.Texture.width, (float)returnBttnx.Texture.height, curScreen.width - returnBttnx.Texture.width * 3 / 2.0f, curScreen.height - returnBttnx.Texture.height * 3 / NUM_FRAMES / 2.0f);
         
+
         background = LoadImage("../Resources/Images/bk.png");
         ImageResize(&background, curScreen.width, curScreen.height);
         backgroundTex = LoadTextureFromImage(background); // background
@@ -54,16 +54,8 @@ namespace CreditsNmsp
 
         logoTex = LoadTextureFromImage(logo);
 
-        /*
-        returnBttn.Texture = LoadTexture("../Resources/Button/Return.png");
-        returnBttn.FrameHeight = (float)returnBttn.Texture.height / NUM_FRAMES;
-        returnBttn.SourceRec = { 0, 0, (float)returnBttn.Texture.width, returnBttn.FrameHeight };
 
-        // Define button bounds on screen
-        returnBttn.Bounds = { curScreen.width - returnBttn.Texture.width * 3 / 2.0f, curScreen.height - returnBttn.Texture.height * 3 / NUM_FRAMES / 2.0f, (float)returnBttn.Texture.width, returnBttn.FrameHeight };
-        returnBttn.State = 0;  // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-        returnBttn.Action = false;
-        */
+        std::cout << "finished credits init";
     }
 
     void UpdateCredits()
@@ -102,15 +94,6 @@ namespace CreditsNmsp
         else returnBttnx.State = 0;
       
 
-        /*
-        if (returnBttn.Action) // Button RETURN PRESSED
-        {
-            std::cout << "boton Credits pressed" << "\n";
-            returnBttn.Action = false;
-            ScreenManagerNam::Screens = ScreenManagerNam::Menu;
-        }
-        */
-
         if (returnBttnx.Action) // Button RETURN PRESSED
         {
             std::cout << "boton Credits pressed" << "\n";
@@ -127,6 +110,8 @@ namespace CreditsNmsp
         {
             lib.openUrl();
         }
+
+        returnBttnx.calcButtonState();
     }
 
     void DrawCredits() 
@@ -156,7 +141,6 @@ namespace CreditsNmsp
 
     void UnloadCredits()
     {
-        UnloadTexture(returnBttn.Texture);
         UnloadTexture(rtn);
         UnloadTexture(backgroundCred);
         UnloadTexture(backgroundTex);

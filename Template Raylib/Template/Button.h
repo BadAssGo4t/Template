@@ -1,7 +1,6 @@
 #pragma once
 #include "ScreenManager.h"
 
-
 namespace Button
 {
     struct   newButton
@@ -21,10 +20,11 @@ namespace Button
         Rectangle Bounds;
         bool Action;
 
-        void setBounds(float widthx, float heightx, float x_a, float y_a)
+        
+        void setBounds(float width_a, float height_a, float x_a, float y_a)
         {
-            Bounds.width = widthx;
-            Bounds.height = heightx;
+            Bounds.width = width_a;
+            Bounds.height = height_a;
             Bounds.x = x_a;
             Bounds.y = y_a;
         }
@@ -50,8 +50,14 @@ namespace Button
         {
             DrawTextureRec(Texture, SourceRec, Vector2{ Bounds.x, Bounds.y }, WHITE);
         }
+        void calcButtonState()
+        {
+            SourceRec.y = State * FrameHeight;
+        }
+
     };
 
+    
     class ReturnButton : public NewMenuButton
     {
         /*
